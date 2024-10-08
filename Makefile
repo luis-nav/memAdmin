@@ -8,7 +8,7 @@ CFLAGS = -Wall -Wextra -std=c99 -g
 TARGET = memAdmin
 
 # Source files
-SRCS = main.c arg_parser.c
+SRCS = main.c arg_parser.c line_parser.c
 
 # Object files (replace .c with .o)
 OBJS = $(SRCS:.c=.o)

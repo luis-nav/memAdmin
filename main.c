@@ -8,7 +8,10 @@ int main(int argc, char** argv) {
 
     char line[256];
     while (fgets(line, sizeof(line), args->file) != NULL) {
-        printf("%s", line);  // Process each line, here we just print it
+        struct Command* cmd = parse_line(line);
+        if (cmd != NULL) {
+            printf("The command is: %d\n", cmd->command);
+        }
     }
 
     return 0;
