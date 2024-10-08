@@ -1,10 +1,5 @@
 #include "arg_parser.h"
 
-struct Args {
-    FILE* file;
-    int algorithm;
-} Args;
-
 struct Args* parse_arguments(int argc, char** argv) {
     if (argc <= 2) {
         printf("Too few arguments: Usage: memAdmin [best|first|worst] [FILE]\n");
@@ -27,7 +22,11 @@ struct Args* parse_arguments(int argc, char** argv) {
     }
 
     struct Args* args;
-    args = malloc(sizeof(Args));
+    args = malloc(sizeof(struct Args));
+    args->file = file;
+    if (!strncmp(argv[1], "best", 4)) args->algorithm = 0;
+    if (!strncmp(argv[1], "first", 5)) args->algorithm = 1;
+    if (!strncmp(argv[1], "worst", 5)) args->algorithm = 2;
 
     return args;
 }
