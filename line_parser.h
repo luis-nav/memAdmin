@@ -12,7 +12,7 @@
 struct Command {
     int command;
     char variable;
-    int tamano;
+    int size;
 };
 
 struct Command* parse_line(char*);

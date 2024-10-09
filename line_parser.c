@@ -45,7 +45,7 @@ struct Command* parse_line(char* line) {
     if (cmd->command < 2) {
         token = strtok(NULL, delimiters);
         if (token != NULL) {
-            cmd->tamano = atoi(token);
+            cmd->size = atoi(token);
         } else {
             printf("Expected size after ALLOC or REALLOC\nLine: %s", line);
             exit(2);
