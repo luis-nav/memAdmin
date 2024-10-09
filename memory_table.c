@@ -3,7 +3,7 @@
 void init_table(struct MemoryTable* table, int capacity) {
     table->blocks = malloc(capacity * sizeof(struct Block));
     table->buffer = malloc(capacity);
-    table->size = 0;
+    table->size = 1;
     table->capacity = capacity;
     struct Block initial_block = {' ', true, 0, capacity}; 
     table->blocks[0] = initial_block;
@@ -26,6 +26,8 @@ void add_block(struct MemoryTable* table, char var_name, int start_index, int en
     int added_index = -1;
     for (int i = 0; i < table->size; i++) {
         if (contains(&(table->blocks[i]), &block)) {
+            table->blocks[i].start_index = block.end_index;
+            set_data(var_name, table->buffer, start_index, end_index);
             added_index = i;
             table->size++;
             break;            
@@ -71,4 +73,25 @@ void free_block(struct MemoryTable* table, int start_index) {
 
         past_block_free_flag = table->blocks[i].free;
     }
+}
+
+void print_table(struct MemoryTable* table) {
+    printf("=== Memory Table ===\n");
+    for (int i = 0; i < table->size; i++) {
+
+        printf("| %c  | %*d | %*d |\n", 
+            table->blocks[i].var_name, 
+            4, table->blocks[i].start_index, 
+            4, table->blocks[i].end_index
+        );
+    }
+    printf("====================");
+    printf("\nMemory view (32x32):\n");
+    for (int i = 0; i < table->capacity; i++) {
+        if (i % 32 == 0) {
+            printf("\n%*d: ", 3, i);
+        }
+        printf(" %c", table->buffer[i]);
+    }
+    printf("\n");
 }
